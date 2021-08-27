@@ -88,6 +88,7 @@ class Game {
 
   endGame(msg) {
     alert(msg);
+    document.getElementById("column-top").removeEventListener('click', this.handleClick)
   }
 
   /** handleClick: handle click of column top to play piece */
@@ -156,5 +157,7 @@ class Game {
     }
   }
 }
+//let myGame = new Game(6, 7);
 
-new Game(6, 7);
+document.getElementById("button").addEventListener("click", function() {new Game(6, 7)});
+
