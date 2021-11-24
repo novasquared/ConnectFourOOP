@@ -113,7 +113,7 @@ class Game {
 
     // check for tie
     if (this.board.every(row => row.every(cell => cell))) {
-      return this.endGame('Tie!');
+      return setTimeout(() => this.endGame('Tie!'), 50);
     }
 
     // switch players
