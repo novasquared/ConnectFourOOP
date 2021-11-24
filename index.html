@@ -4,16 +4,43 @@
   <link href="connect4.css" rel="stylesheet">
 </head>
 <body>
-<div>
-  <input type="button" value="Start Game!" id="button">
-</div>
-
-<div id="game">
-  <table id="board"></table>
-</div>
-
-
-<script src="connect4.js"></script>
-
+  <h1>CONNECT FOUR</h1>
+  <form>
+    <select id=p1-color>
+      <option value="" selected disabled hidden>
+        - Select Player 1 Color -
+      </option>
+      <option class="red">Red</option>
+      <option class="indigo">Purple</option>
+      <option class="mediumblue">Blue</option>
+      <option class="darkcyan">Turquoise</option>
+      <option class="green">Green</option>
+      <option class="chartreuse">Yellow-Green</option>
+      <option class="gold">Yellow</option>
+      <option class="darkorange">Orange</option>
+      <option class="tomato">Tomato</option>
+      <option class="hotpink">Pink</option>
+    </select>
+    <select id=p2-color>
+      <option value="" selected disabled hidden>
+        - Select Player 2 Color -
+      </option>
+      <option class="red">Red</option>
+      <option class="indigo">Purple</option>
+      <option class="mediumblue">Blue</option>
+      <option class="darkcyan">Turquoise</option>
+      <option class="green">Green</option>
+      <option class="chartreuse">Yellow-Green</option>
+      <option class="gold">Yellow</option>
+      <option class="darkorange">Orange</option>
+      <option class="tomato">Tomato</option>
+      <option class="hotpink">Pink</option>
+    </select>
+    <input type="button" value="Start Game!" id="start-game">
+  </form>
+  <div id="game">
+    <table id="board"></table>
+  </div>
+  <script src="connect4.js"></script>
 </body>
 </html>

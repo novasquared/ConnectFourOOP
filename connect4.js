@@ -7,11 +7,13 @@
  */
 
 class Game {
-  constructor (height = 6, width = 7) {
+  constructor(p1, p2, height = 6, width = 7) {
+    this.players = [p1, p2];
+
     this.width = width;
     this.height = height;
 
-    this.currPlayer = 1; // active player: 1 or 2
+    this.currPlayer = p1; // active player: 1 or 2
     this.board = []; // array of rows, each row is array of cells  (board[y][x])
 
     this.handleClick = this.handleClick.bind(this);
@@ -19,10 +21,10 @@ class Game {
     this.makeBoard();
     this.makeHtmlBoard();
   }
+
   /** makeBoard: create in-JS board structure:
    *   board = array of rows, each row is array of cells  (board[y][x])
    */
-
   makeBoard() {
     for (let y = 0; y < this.height; y++) {
       this.board.push(Array.from({ length: this.width }));
@@ -30,7 +32,6 @@ class Game {
   }
 
   /** makeHtmlBoard: make HTML table and row of column tops. */
-
   makeHtmlBoard() {
     const board = document.getElementById('board');
 
@@ -62,7 +63,6 @@ class Game {
   }
 
   /** findSpotForCol: given column x, return top empty y (null if filled) */
-
   findSpotForCol(x) {
     for (let y = this.height - 1; y >= 0; y--) {
       if (!this.board[y][x]) {
@@ -73,11 +73,10 @@ class Game {
   }
 
   /** placeInTable: update DOM to place piece into HTML table of board */
-
   placeInTable(y, x) {
     const piece = document.createElement('div');
     piece.classList.add('piece');
-    piece.classList.add(`p${this.currPlayer}`);
+    piece.style.backgroundColor = this.currPlayer.color;
     piece.style.top = -50 * (y + 2);
 
     const spot = document.getElementById(`${y}-${x}`);
@@ -85,18 +84,17 @@ class Game {
   }
 
   /** endGame: announce game end */
-
   endGame(msg) {
     alert(msg);
-    document.getElementById("column-top").removeEventListener('click', this.handleClick)
+    document.getElementById("column-top").removeEventListener('click', this.handleClick);
+    window.location.reload();
   }
 
   /** handleClick: handle click of column top to play piece */
-
   handleClick(evt) {
     // get x from ID of clicked cell
     const x = +evt.target.id;
-
+    console.log(`x=${x}`);
     // get next spot in column (if none, ignore click)
     const y = this.findSpotForCol(x);
     if (y === null) {
@@ -106,39 +104,38 @@ class Game {
     // place piece in board and add to HTML table
     this.board[y][x] = this.currPlayer;
     this.placeInTable(y, x);
-    
+
     // check for win
     if (this.checkForWin()) {
-      return this.endGame(`Player ${this.currPlayer} won!`);
+      return setTimeout(
+        () => (this.endGame(`${this.currPlayer.name} player won!`)), 50);
     }
-    
+
     // check for tie
     if (this.board.every(row => row.every(cell => cell))) {
       return this.endGame('Tie!');
     }
-      
+
     // switch players
-    this.currPlayer = this.currPlayer === 1 ? 2 : 1;
+    this.currPlayer =
+      this.currPlayer === this.players[0] ? this.players[1] : this.players[0];
   }
 
   /** checkForWin: check board cell-by-cell for "does a win start here?" */
-
   checkForWin() {
-    // created variable to hold an arrow function so that the variable will look at the checkForWin class for context
-    let _win = (cells) => {
-      // Check four cells to see if they're all color of current player
-      //  - cells: list of four (y, x) cells
-      //  - returns true if all are legal coordinates & all match currPlayer
-
-      return cells.every(
-        ([y, x]) =>
-          y >= 0 &&
-          y < this.height &&
-          x >= 0 &&
-          x < this.width &&
-          this.board[y][x] === this.currPlayer
-      );
-    }
+    // created variable to hold an arrow function so that the variable will
+    // look at the checkForWin class for context
+    // Check four cells to see if they're all color of current player
+    //  - cells: list of four (y, x) cells
+    //  - returns true if all are legal coordinates & all match currPlayer
+    const _win = cells => cells.every(
+      ([y, x]) =>
+        y >= 0 &&
+        y < this.height &&
+        x >= 0 &&
+        x < this.width &&
+        this.board[y][x] === this.currPlayer
+    );
 
     for (let y = 0; y < this.height; y++) {
       for (let x = 0; x < this.width; x++) {
@@ -157,7 +154,33 @@ class Game {
     }
   }
 }
-//let myGame = new Game(6, 7);
 
-document.getElementById("button").addEventListener("click", function() {new Game(6, 7)});
+// Player name is the generic color name in the text of the option selected from
+// the dropdown.  Player color is the html color.
+class Player {
+  constructor({name, color}) {
+    this.color = color;
+    this.name = name
+  }
+}
+
+// Event listener for the start of the game.  Gets the player color and name 
+// based on their selection from the drop-down.  
+document.getElementById("start-game").addEventListener("click", function () {
+  const player1 = document.getElementById('p1-color');
+  const player2 = document.getElementById('p2-color');
+  const p1Selected = player1.options[player1.selectedIndex];
+  const p2Selected = player2.options[player2.selectedIndex];
+
+  const p1 = new Player({
+    name: p1Selected.text, 
+    color: p1Selected.className
+  });
+  const p2 = new Player({
+    name: p2Selected.text, 
+    color: p2Selected.className
+  });
+
+  new Game(p1, p2);
+});
 

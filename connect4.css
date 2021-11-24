@@ -1,34 +1,96 @@
 /* game board table */
+h1{
+  color: green;
+  font-size: 48px;
+  text-align: center;
+  padding-top: 2vh;
+}
+table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+}
+form {
+  display:flex;
+  justify-content: space-between;
+  width: 563px;
+  margin: 0 auto;
+}
+option {
+  padding: 5px;
+  margin: 2px;
+  color: white;
+}
 
+#start-game {
+  display: inline-block;
+  background-color: green;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 6px 18px;
+}
 #board td {
-  width: 50px;
-  height: 50px;
+  width: 75px;
+  height: 75px;
   border: solid 1px #666;
 }
 
 /* pieces are div within game table cells: draw as colored circles */
-
 .piece {
   margin: 5px;
   width: 80%;
   height: 80%;
   border-radius: 50%;
 }
-
 .piece.p1 {
   background-color: red;
 }
-
 .piece.p2 {
   background-color: blue;
 }
 
 /* column-top is table row of clickable areas for each column */
-
 #column-top td {
   border: dashed 1px lightgray;
 }
-
 #column-top td:hover {
+  background-color: cornsilk;
+}
+.red {
+  background-color: red;
+}
+.indigo {
+  background-color: indigo;
+}
+.mediumblue {
+  background-color: mediumblue;
+}
+.darkcyan {
+  background-color: darkcyan;
+}
+.green {
+  background-color: green;
+}
+.red {
+  background-color: red;
+}
+.chartreuse {
+  background-color: chartreuse;
+}
+.gold {
   background-color: gold;
+}
+.darkorange {
+  background-color: darkorange;
+}
+.tomato {
+  background-color: tomato;
+}
+.hotpink {
+  background-color: hotpink;
 }
