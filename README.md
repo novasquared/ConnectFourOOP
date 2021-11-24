@@ -7,3 +7,7 @@ board fills (tie)
 
 This is an object oriented version of the game written in javascript.  It allows the players to select their color from a list.
 
+You can play this game at:
+
+https://novasquared.github.io/ConnectFourOOP/
+
